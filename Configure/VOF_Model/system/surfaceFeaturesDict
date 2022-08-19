@@ -1,0 +1,33 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  6
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      surfaceFeaturesDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+/*
+Comments:
+
+2021-04-29:
+	The river bed was removed from the list of surfaces to analyze for edges because we
+	want to treat it as smooth as possible to avoid spot refinement based on small local
+	changes in the ripples.
+*/
+
+surfaces ( "BridgeStructure.stl" );
+
+// Identify a feature when angle between faces < includedAngle
+includedAngle		175;
+//geometricTestOnly	yes;
+//intersectionMethod	self;
+
+// ************************************************************************* //

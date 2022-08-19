@@ -1,0 +1,125 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  6
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      snappyHexMeshDict;
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+castellatedMesh true;
+snap            true;
+addLayers       %addLayers%;
+
+geometry
+{
+    Bathymetry
+    {
+        type triSurfaceMesh;
+        file "RiverBedSurface.stl";
+    }
+    BridgeStructure
+    {
+        type triSurfaceMesh;
+        file "BridgeStructure.stl";
+    }
+};
+
+castellatedMeshControls
+{
+
+    maxLocalCells 100000000;
+    maxGlobalCells 200000000;
+    minRefinementCells 0;
+    nCellsBetweenLevels 1;
+
+    features
+    (
+		{ file "Bathymetry.eMesh"; level %BedFeatureLevel%; }
+		{ file "BridgeStructure.eMesh"; level %PierFeatureLevel%; }
+	);
+
+    resolveFeatureAngle 30;
+    refinementSurfaces
+    {
+        Bathymetry { level (%BedSurfaceLevel%); gapLevelIncrement 1;}
+        BridgeStructure { level (%PierSurfaceLevel%); gapLevelIncrement 1;}
+    }
+
+    refinementRegions
+    {
+        %RiverBedRegion%
+		%BridgeStructureRegion%
+    }
+
+    locationInMesh ( %InsidePoint% );
+
+    allowFreeStandingZoneFaces false;
+}
+
+snapControls
+{
+    nSmoothPatch 3;
+    tolerance 1.0;
+    nSolveIter 10;
+    nRelaxIter 10;
+    nFeatureSnapIter 25;
+    implicitFeatureSnap false;
+    explicitFeatureSnap true;
+    multiRegionFeatureSnap false;
+}
+
+addLayersControls
+{
+    layers
+    {	
+		%BedLayerContent%
+		%BridgeStructureLayerContent%
+    }
+    relativeSizes false;
+    firstLayerThickness %First_Cell%;
+    minThickness 0.00001;
+    expansionRatio %expansionRatio%;
+    nGrow 0;
+
+	// create surface layers at sharp corners (was 45)
+    featureAngle 179;
+    nRelaxIter 5;
+    nSmoothSurfaceNormals 1;
+    nSmoothNormals 3;
+    nSmoothThickness 10;
+    maxFaceThicknessRatio 0.5;
+    maxThicknessToMedialRatio 0.3;
+    minMedianAxisAngle 90;
+    nBufferCellsNoExtrude 0;
+    nLayerIter 10;
+    nRelaxedIter 10;
+}
+
+meshQualityControls
+{
+    #include "meshQualityDict"
+    nSmoothScale 6;
+    errorReduction 0.75;
+    relaxed	
+    {maxNonOrtho 60;}
+}
+
+writeFlags
+(
+    scalarLevels    // write volScalarField with cellLevel for postprocessing
+    layerSets       // write cellSets, faceSets of faces in layer
+    layerFields     // write volScalarField for layer coverage
+);
+
+mergeTolerance 1E-7;
+
+// ************************************************************************* //

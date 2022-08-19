@@ -1,0 +1,5 @@
+Xmin	-2.5
+Xmax	2.5
+Ymin	-0.9144
+Ymax	0.9144
+Zmin	-0.14

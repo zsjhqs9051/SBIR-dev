@@ -1,0 +1,17 @@
+CFDMode	1
+WSE	0.12
+d50	0.0023
+Q	0.05
+Ux	-2
+Base_Size	0.02
+First_Cell	0.01
+BedLayerN	1
+BridgeLayerN	0
+BedSurface	0.02
+BridgeSurface	0.02
+BedRegion	0
+BridgeRegion	0
+Ratio	1.5
+dt	0.01
+physicalTime	1.0
+Processor_Number	30.0
