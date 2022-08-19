@@ -1,9 +1,33 @@
 Support.py
-	1. replacement(route,replacedict)
+	1. findSubstring(string,substring,times)
+		finde the the index of the Nth of the sub-string appearing in the string
+		
+	2. file_last_N_line(route,n=0))
+		read the file from the end
+		
+	3. input_check(title,data):
+	
+	4. replacement(route,replacedict)
 		a. route: location of the file, which needs to replace the string with data value
 		b. replacedict: string and the value of this string
-	2. TimeStamp()
-	3. SimpleLog()
+		
+	5. TimeStamp()
+	
+	6. SimpleLog()
+	
+	7. RecoverOpenFoam(RecoveryId,Tool,Log,DimensionAdjust={})
+		recover from the mesh fail and openfoam running fail
+	8. MeshAnalysis()
+		a. PrismLayerCheck()
+			check whether there is any prism layer
+			check the coverage of each prism layer
+		b. PrismLayerModification(PMID,DimensionAdjust={},SHMParemeter={})
+			PMID = 0,1: modify the SHM setup to only generate 1 layer with size of 0.5*base_size on the bathymetry
+			PMID = 2: disable all prism layer
+			
+		c. MeshCheckLog()
+			check the mesh error number
+#######################################################################################################################
 
 
 Main.py
@@ -34,9 +58,27 @@ Main.py
 								default value is 1.5
 		dt: max allowable time step
 		physicalTime: physical time
-	6. CFD Conduct, NOT finished Now
+	6. CFD Conduct, single-phase finished
+#######################################################################################################################
 
-Preparation class //finished
+
+CFD_executation.py
+	1. DeleteProcessors()
+		remove processors
+	
+	2.RunOpenFOAMTool(Tool, Options = '',NumberCores = 16, Log = None, TimeControl = {})
+		load openfoam cmd
+		a. class DummyProcessor()
+		b. class SolverProcessor()
+			i. dis-converge
+		c. Execute(Command,Tool,Log = None, TimeControl = {})
+			run the cmd and record output information
+	
+		
+#######################################################################################################################
+
+
+Preparation.py //finished
 	1. __init__()
 		load the input geometry dimension and CFD information 
 	2. __srcroute()
@@ -74,3 +116,4 @@ Preparation class //finished
 			BedRegion,BridgeRegion: Cell size in the region around the riverbed and bridge
 	10. SHMDict(DimensionAdjustDict,SHMParemeterDict)
 		replace the data values in "system/snappyHexMeshDict" 
+#######################################################################################################################
