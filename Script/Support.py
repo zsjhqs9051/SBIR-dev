@@ -39,12 +39,18 @@ def file_last_N_line(route,n=0):
 #inpute check
 def input_check(title,data):#need to change
 	value = -1.0
-	Error_Log = "Temp/Error_Log.txt"
+	Error_Log = "../temp/Error_Log.txt"
 	if len(data) == 0:
-		pass
+		with open (Error_Log, "a") as Error_Log :
+			content = title + " is empty\n"
+			Error_Log.write(content)
 	else:
 		try:
 			value = float(data)
+			if value < 0:
+				with open (Error_Log, "a") as Error_Log :
+					content = title + " is negtive\n"
+					Error_Log.write(content)
 		except ValueError:
 			with open (Error_Log, "a") as Error_Log :
 				content = title + " is NaN\n"

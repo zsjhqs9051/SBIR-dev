@@ -117,3 +117,14 @@ Preparation.py //finished
 	10. SHMDict(DimensionAdjustDict,SHMParemeterDict)
 		replace the data values in "system/snappyHexMeshDict" 
 #######################################################################################################################
+
+CFDInfoGUI.py
+
+The GUI window to input CFD information
+
+unfinished function:
+	1. MeshOnlyApp()
+		a. only mesh the flow domain
+		b. once accept, directly run or click "Run" Button again?
+	2. RunApp()
+		a. run CFD model
