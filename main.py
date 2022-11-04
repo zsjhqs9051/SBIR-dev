@@ -1,11 +1,12 @@
-#import wx
-#import wx.xrc
+import wx
+import wx.xrc
 import os
 import sys
 import shutil
 from Script.Preparation import *
 from Script.Support import *
 from Script.CFD_executation import *
+from Script.CFDInfoGUI import *
 
 #CFD Simulation Folder
 if os.path.exists('CFD-Model'):
@@ -25,6 +26,11 @@ if os.path.exists('temp'):
 	shutil.rmtree('temp')
 os.mkdir('temp')
 '''
+app = wx.App(False)
+frame = SBIR(None)
+frame.Show()
+app.MainLoop()
+del app
 
 #Bathymetry Generation, code needed
 
@@ -106,4 +112,5 @@ for RecoveryId in range(4):
 	RunOpenFOAMTool('reconstructPar')
 	DeleteProcessors()
 	break
+os.rename('CFD-Model.OpenFOAM','CFD-Model.foam')
 os.chdir(mother_route)

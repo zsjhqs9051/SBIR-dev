@@ -55,7 +55,7 @@ def Execute(Command,Tool,Log = None, TimeControl = {}):
 	TimeOut = 300.0
 	if Log is None:
 		Log = SimpleLog()
-	if Tool == 'pimpleFoam':
+	if Tool == 'pimpleFoam' or Tool == 'interFoam':
 		LineProcessor = SolverProcessor (TimeControl)
 	else:
 		LineProcessor = DummyProcessor ()

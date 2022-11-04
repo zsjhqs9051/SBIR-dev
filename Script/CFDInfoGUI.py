@@ -11,7 +11,7 @@ import wx
 import wx.xrc
 import os
 import numpy as np
-from Support import *
+from Script.Support import *
 ###########################################################################
 ## Class SBIR
 ###########################################################################
@@ -770,7 +770,7 @@ class SBIR ( wx.Frame ):
 	def MeshOnlyApp( self, event ):
 		CFDInfo = {}
 		CFDInfo = self.InputInfo()
-		Error_Log = "../temp/Error_Log.txt"
+		Error_Log = "temp/Error_Log.txt"
 		if os.path.exists(Error_Log):
 			with open (Error_Log, "r") as Error_info :
 				f = Error_info.read().strip()
@@ -791,14 +791,14 @@ class SBIR ( wx.Frame ):
 	def RunApp( self, event ):
 		CFDInfo = {}
 		CFDInfo = self.InputInfo()
-		Error_Log = "../temp/Error_Log.txt"
+		Error_Log = "temp/Error_Log.txt"
 		if os.path.exists(Error_Log):
 			with open (Error_Log, "r") as Error_info :
 				f = Error_info.read().strip()
 		else:
 			f = ''
 		if len(f) == 0:
-			pass
+			self.Destroy()
 		else:
 			ErrMsg = wx.MessageDialog(None, f, 'Error Information!', wx.OK | wx.ICON_QUESTION)
 			if ErrMsg.ShowModal() == wx.OK:
@@ -812,8 +812,8 @@ class SBIR ( wx.Frame ):
 
 	#load the input information
 	def InputInfo(self):
-		CFDInfoFile = '../temp/CFD_Info.txt'
-		Error_Log = "../temp/Error_Log.txt"
+		CFDInfoFile = 'temp/CFD_Info.txt'
+		Error_Log = "temp/Error_Log.txt"
 		CFDInfo = {}
 
 		if os.path.exists(CFDInfoFile):
@@ -879,11 +879,12 @@ class SBIR ( wx.Frame ):
 			for item in CFDInfo.keys():
 				content = item + '\t' + str(CFDInfo[item]) + '\n'
 				f.write(content)
-		print (CFDInfo)
 		return CFDInfo
 
+'''
 app = wx.App(False)
 frame = SBIR(None)
 frame.Show()
 app.MainLoop()
 del app
+'''
